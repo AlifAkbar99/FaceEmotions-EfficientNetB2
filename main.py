@@ -153,9 +153,6 @@ while True:
         face_status = "Found"
         landmarks = detection_result.face_landmarks[0]
         
-        # Draw mesh
-        frame = draw_face_mesh(frame, landmarks, w, h)
-        
         # Get bbox and predict emotion
         x_min, y_min, x_max, y_max = get_face_bbox(landmarks, w, h)
         face_roi = frame[y_min:y_max, x_min:x_max]
@@ -167,6 +164,9 @@ while True:
             face_input = preprocess_input(face_input)
             
             emotions_pred = model.predict(face_input, verbose=0)[0]
+            
+         # Draw mesh
+        frame = draw_face_mesh(frame, landmarks, w, h)
     
     # Create and combine panel
     panel = create_panel(emotions_pred, face_status, h)
